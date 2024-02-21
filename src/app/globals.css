@@ -26,8 +26,128 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+/*@layer utilities {*/
+/*  .text-balance {*/
+/*    text-wrap: balance;*/
+/*  }*/
+/*}*/
+
+@font-face {
+  font-family: 'Lato-Regular';
+  src: url('../assets/fonts/lato/Lato-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato-Hairline';
+  src: url('../assets/fonts/lato/Lato-Hairline.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato-Bold';
+  src: url('../assets/fonts/lato/Lato-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato-Medium';
+  src: url('../assets/fonts/lato/Lato-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato-Semibold';
+  src: url('../assets/fonts/lato/Lato-Semibold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato-HeavyItalic';
+  src: url('../assets/fonts/lato/Lato-HeavyItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato-MediumItalic';
+  src: url('../assets/fonts/lato/Lato-MediumItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato-HairlineItalic';
+  src: url('../assets/fonts/lato/Lato-HairlineItalic.ttf') format('truetype');
+}
+
+/*@font-face {*/
+/*  font-family: 'IRANYekan';*/
+/*  src: url('./assets/fonts/IRANYekanRegularFaNum.ttf') format('truetype'); !* Safari, Android, iOS *!*/
+/*  unicode-range: U+0600-06FF;*/
+/*}*/
+
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .rtl-dir {
+    direction: rtl;
+  }
+
+  .custom-clip-1 {
+    clip-path: polygon(100% 83%, 72% 95%, 0 80%, 0 0, 100% 0);
+  }
+
+  .custom-clip-2 {
+    clip-path: polygon(0 100%, 50% 92%, 100% 100%, 100% 0, 0 0);
+  }
+
+  .custom-clip-3 {
+    clip-path: polygon(0 0, 0 100%, 40% 50%);
+  }
+
+  .custom-clip-4 {
+    clip-path: polygon(100% 0%, 0 100%, 100% 100%);
+  }
+
+  .resume-bg {
+    background: linear-gradient(
+            90deg,
+            rgba(165, 165, 165, 0.03) 0%,
+            rgba(165, 165, 165, 0.03) 8%,
+            rgba(235, 235, 235, 0.03) 8%,
+            rgba(235, 235, 235, 0.03) 9%,
+            rgba(7, 7, 7, 0.03) 9%,
+            rgba(7, 7, 7, 0.03) 14%,
+            rgba(212, 212, 212, 0.03) 14%,
+            rgba(212, 212, 212, 0.03) 17%,
+            rgba(219, 219, 219, 0.03) 17%,
+            rgba(219, 219, 219, 0.03) 95%,
+            rgba(86, 86, 86, 0.03) 95%,
+            rgba(86, 86, 86, 0.03) 100%
+    ),
+    linear-gradient(
+            67.5deg,
+            rgba(80, 80, 80, 0.03) 0%,
+            rgba(80, 80, 80, 0.03) 11%,
+            rgba(138, 138, 138, 0.03) 11%,
+            rgba(138, 138, 138, 0.03) 17%,
+            rgba(122, 122, 122, 0.03) 17%,
+            rgba(122, 122, 122, 0.03) 24%,
+            rgba(166, 166, 166, 0.03) 24%,
+            rgba(166, 166, 166, 0.03) 27%,
+            rgba(245, 245, 245, 0.03) 27%,
+            rgba(245, 245, 245, 0.03) 89%,
+            rgba(88, 88, 88, 0.03) 89%,
+            rgba(88, 88, 88, 0.03) 100%
+    ),
+    linear-gradient(
+            67.5deg,
+            rgba(244, 244, 244, 0.03) 0%,
+            rgba(244, 244, 244, 0.03) 4%,
+            rgba(16, 16, 16, 0.03) 4%,
+            rgba(16, 16, 16, 0.03) 10%,
+            rgba(157, 157, 157, 0.03) 10%,
+            rgba(157, 157, 157, 0.03) 20%,
+            rgba(212, 212, 212, 0.03) 20%,
+            rgba(212, 212, 212, 0.03) 83%,
+            rgba(5, 5, 5, 0.03) 83%,
+            rgba(5, 5, 5, 0.03) 84%,
+            rgba(237, 237, 237, 0.03) 84%,
+            rgba(237, 237, 237, 0.03) 100%
+    ),
+    linear-gradient(90deg, #fff, #fff);
+    /* height: 140vh;
+    width: 80vw; */
+    /* margin: auto; */
   }
 }
