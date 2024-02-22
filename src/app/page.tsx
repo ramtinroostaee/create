@@ -22,7 +22,7 @@ const App = () => {
 				)}</div>
 
 				<div className={"mt-8"}>
-					<Notes scale={scale} strings={["E", "A", "D", "G", "B", "E"]} />
+					<Notes scale={scale} strings={["E", "A", "D", "G", "B", "E"].reverse()} />
 				</div>
 			</div>
 		</div>
