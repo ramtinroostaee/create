@@ -3,11 +3,11 @@ import { useMemo, useState } from "react";
 import { createScaleFromMajor, HarmonicMinorAccidental, Liaghat } from "@/Concepts/ScaleConstruction";
 import DisplayScale from "@/Components/Scales/DisplayScale";
 import { createAllPossibleChordsInRootScale } from "@/Concepts/ChordConstruction";
+import Notes from "@/Components/Neck/Notes";
 
 const App = () => {
 	const [root, setRoot] = useState("E");
 	const scale = useMemo(() => createScaleFromMajor(Liaghat, root), [root]);
-	console.log(scale);
 
 	return (
 		<div className='resume-bg w-[1300px] m-auto flex justify-center'>
@@ -20,6 +20,10 @@ const App = () => {
 							<DisplayScale notes={notes}/></div>)}
 					</div>
 				)}</div>
+
+				<div className={"mt-8"}>
+					<Notes scale={scale} strings={["E", "A", "D", "G", "B", "E"]} />
+				</div>
 			</div>
 		</div>
 	);
