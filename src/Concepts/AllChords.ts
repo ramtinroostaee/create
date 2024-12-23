@@ -10,6 +10,11 @@ export const major: chord = {
 	symbol: ""
 };
 
+export const majorAddNine: chord = {
+	intervals: [{ noteIndex: 1 }, { noteIndex: 3 }, { noteIndex: 5 }, { noteIndex: 9 }],
+	symbol: "add9"
+};
+
 export const minor: chord = {
 	intervals: [{ noteIndex: 1 }, { noteIndex: 3, change: -0.5 }, { noteIndex: 5 }],
 	symbol: "m"
@@ -22,7 +27,7 @@ export const powerChord: chord = {
 
 export const augmented: chord = {
 	intervals: [{ noteIndex: 1 }, { noteIndex: 3 }, { noteIndex: 5, change: 0.5 }],
-	symbol: "5"
+	symbol: "aug"
 };
 
 export const diminished: chord = {
@@ -83,6 +88,14 @@ export const dominantNinth: chord = {
 	symbol: "9"
 };
 
+export const dominantNinthSharpNinth: chord = {
+	intervals: [{ noteIndex: 1 }, { noteIndex: 3 }, { noteIndex: 5 }, { noteIndex: 7, change: -0.5 }, {
+		noteIndex: 9,
+		change: 0.5
+	}],
+	symbol: "9 #9"
+};
+
 export const majorEleventh: chord = {
 	intervals: [{ noteIndex: 1 }, { noteIndex: 3 }, { noteIndex: 5 }, { noteIndex: 7 }, { noteIndex: 9 }, { noteIndex: 11 }],
 	symbol: "maj11"
@@ -124,3 +137,52 @@ export const dominantThirteenth: chord = {
 	}, { noteIndex: 9 }, { noteIndex: 13 }],
 	symbol: "13"
 };
+
+export type all =
+	"major" |
+	"majorAddNine" |
+	"minor" |
+	"powerChord" |
+	"augmented" |
+	"diminished" |
+	"suspended4th" |
+	"suspended2nd" |
+	"majorSeventh" |
+	"minorSeventh" |
+	"dominantSeventh" |
+	"majorNinth" |
+	"minorNinth" |
+	"dominantNinth" |
+	"dominantNinthSharpNinth" |
+	"majorEleventh" |
+	"minorEleventh" |
+	"dominantEleventh" |
+	"majorThirteenth" |
+	"minorThirteenth" |
+	"dominantThirteenth"
+
+const AllChords = {
+	major,
+	majorAddNine,
+	minor,
+	powerChord,
+	augmented,
+	diminished,
+	suspended4th,
+	suspended2nd,
+	majorSeventh,
+	minorSeventh,
+	dominantSeventh,
+	majorNinth,
+	minorNinth,
+	dominantNinth,
+	dominantNinthSharpNinth,
+	majorEleventh,
+	minorEleventh,
+	dominantEleventh,
+	majorThirteenth,
+	minorThirteenth,
+	dominantThirteenth,
+};
+
+export default AllChords;
