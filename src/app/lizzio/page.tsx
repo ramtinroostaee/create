@@ -45,7 +45,9 @@ const Lizzio = () => {
 									{possibles[name]?.notes.map((pitch, index) =>
 										<div onClick={() =>
 											index >= 2 && setSelected(possibles[name]?.notes.slice(0, index + 1))
-										} key={pitch}>{pitch}</div>
+										} key={pitch}
+												 className={`${selected.includes(pitch) ? 'bg-blue-200' : ''}
+														rounded-md px-2 py-1 m-2 flex justify-center items-center`}>{pitch}</div>
 									)}
 								</div>
 							)}
@@ -59,7 +61,8 @@ const Lizzio = () => {
 														onClick={() => setSelected((pre) =>
 															pre.includes(note) ? pre : [...pre, note]
 														)}
-														className={"bg-gray-400 rounded-md px-2 py-1 m-2 flex justify-center items-center"}>
+														className={`${selected.includes(note) ? 'bg-blue-400' : 'bg-gray-400'}
+														rounded-md px-2 py-1 m-2 flex justify-center items-center`}>
 									{the} <span className={'text-xs'}>({note})</span>
 								</div>
 							})}
