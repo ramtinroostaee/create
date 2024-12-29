@@ -9,7 +9,7 @@ import {
 	note,
 	PhrygianDominantAccidental
 } from "@/Concepts/ScaleConstruction";
-import { mapChangeToSymbol, mapLengthToName } from "@/Concepts/lizzio/chords";
+import { mapChangeToSymbol } from "@/Concepts/lizzio/chords";
 import Notes from "@/Components/Neck/Notes";
 
 const Lizzio = () => {
@@ -35,7 +35,7 @@ const Lizzio = () => {
 							 strings={["E", "A", "D", "G", "B", "E"].reverse() as note[]}/>
 			</div>
 			<div className={'flex flex-wrap px-10 gap-6 mt-8 justify-center'}>
-				{alg.map(({ note, possibles, alterations, max }) =>
+				{alg.map(({ note, possibles, alterations }) =>
 					<div key={note} className={'flex flex-col items-center card p-6'}>
 						<div className={'flex gap-6 text-center'}>
 							{Object.keys(possibles).map((name) =>

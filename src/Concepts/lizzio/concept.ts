@@ -1,5 +1,13 @@
 import { createScale, intervalNote, MajorScale, note, notes } from "@/Concepts/ScaleConstruction";
-import { allChords, createChord, findNote, intervalIncludes, mapLengthToName } from "@/Concepts/lizzio/chords";
+import { allChords, } from "@/Concepts/lizzio/chords";
+import {
+	add,
+	createChord,
+	cutChangeNo,
+	findNote,
+	intervalIncludes,
+	sortInterval
+} from "@/Concepts/lizzio/chords/utils";
 
 const findDistance = (noteOne: note, noteTwo: note) => {
 	const the =
@@ -19,7 +27,7 @@ const findIntervals = (baseScale: note[], majorScale: note[]) => {
 	for (let i = 1; i < 7; i++) {
 		const noteIndex = i % 2 ? i + 8 : i + 1
 
-		baseScale.forEach((base, index) => {
+		baseScale.forEach((base) => {
 			if (base === majorScale[i]) {
 				the.push({ noteIndex })
 			} else {
@@ -30,9 +38,8 @@ const findIntervals = (baseScale: note[], majorScale: note[]) => {
 			}
 		})
 	}
-	the.sort((a, b) => a.noteIndex + (a.change ?? 0) - b.noteIndex - (b.change ?? 0))
 
-	return the
+	return sortInterval(the)
 }
 
 export const algorithm = (scale: note[], root: note) => {
@@ -43,24 +50,51 @@ export const algorithm = (scale: note[], root: note) => {
 	const lengths = []
 
 	Object.keys(allChords).forEach((name) => {
-		const the = intervalIncludes(allIntervals, allChords[name])
-		let index = 0
+		const addsInclude = intervalIncludes(allIntervals, allChords[name]?.add ?? [])
+		let ok = true
+		addsInclude.forEach((includes) => {
+			ok = ok && includes
+		})
 
-		for (let done = false; index < the.length && !done;) {
-			the[index] ? ++index : done = true
-		}
+		if (ok) {
+			/* intervalCutChangeNo */
+			const ICCN = cutChangeNo(allChords[name])
 
-		if (index >= 3) {
-			const interval = allChords[name].slice(0, index)
-			const length = mapLengthToName[index]
-			lengths.push(length)
-			const symbol = name.includes('sus') ?
-				`${length}${name}` :
-				`${name}${length}`
+			/* intervalCutChangeNoIncludes */
+			const ICCNI = intervalIncludes(allIntervals, ICCN)
+			let no = []
+			ICCNI.forEach((includes, index) => !includes && no.push(ICCN[index].noteIndex))
 
-			possibles[name] = { interval, notes: createChord(root, interval), symbol }
+			let index = 0
+
+			for (let done = false; index < ICCNI.length && !done;) {
+				ICCNI[index] ? ++index : done = true
+			}
+
+			if (index >= (3 - (allChords[name]?.no?.length ?? 0))) {
+				const interval = ICCN.slice(0, index)
+
+				/* MaxPossibleNoteIndex */
+				const MPNI = ICCN[index - 1].noteIndex
+
+				lengths.push(MPNI)
+				const the = MPNI === 5 ? '' : MPNI
+				const symbol = name.includes('sus') ?
+					`${the}${name}` :
+					`${name}${the}`
+				const allInterval = add(interval, allChords[name]?.add ?? [])
+
+				possibles[name] = {
+					interval: allInterval,
+					notes: createChord(root, allInterval),
+					symbol
+				}
+			} else if (no.length <= 2) {
+				console.log(root, no, name)
+			}
 		}
 	})
+
 	const alterations = allIntervals.filter(({ noteIndex, change }) =>
 		noteIndex >= 5 && noteIndex !== 7
 	).map((interval) =>
