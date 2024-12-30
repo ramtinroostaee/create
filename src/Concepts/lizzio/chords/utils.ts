@@ -64,6 +64,13 @@ export const createAChord = (achord: AChord) => {
 	return the
 }
 
+// this may not be perfect
+export const combineAChords = (one: AChord, two: AChord) => ({
+	changes: sortInterval([...one.changes, ...two.changes]),
+	minValuableChord: Math.max(one.minValuableChord ?? 3, two.minValuableChord ?? 3),
+	cut: Math.min(one.cut ?? 13, two.cut ?? 13)
+}) as AChord
+
 export const sortInterval = (intervals: intervalNote[]) => intervals.sort((a, b) => a.noteIndex + (a.change ?? 0) - b.noteIndex - (b.change ?? 0))
 
 // distanceFromRoot

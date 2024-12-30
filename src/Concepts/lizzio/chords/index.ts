@@ -1,11 +1,12 @@
 import { intervalNote } from "@/Concepts/ScaleConstruction";
-import { noteIndexes } from "@/Concepts/lizzio/chords/utils";
+import { combineAChords, noteIndexes } from "@/Concepts/lizzio/chords/utils";
 
 export type AChord = {
 	changes?: intervalNote[],
 	add?: intervalNote[],
 	no?: noteIndexes[],
 	cut?: noteIndexes
+	minValuableChord?: number
 }
 
 export const dominant: intervalNote[] = [
@@ -18,7 +19,7 @@ export const dominant: intervalNote[] = [
 	{ noteIndex: 13 }
 ]
 
-export const major: AChord = { changes: [{ noteIndex: 7, change: 0.5 }] }
+export const major: AChord = { changes: [{ noteIndex: 7, change: 0.5 }], minValuableChord: 4 }
 export const minor: AChord = { changes: [{ noteIndex: 3, change: -0.5 }] }
 export const diminished: AChord = {
 	changes: [
@@ -29,7 +30,7 @@ export const diminished: AChord = {
 	cut: 11
 }
 
-export const augmented:AChord = { changes: [{ noteIndex: 5, change: 0.5 }] }
+export const augmented: AChord = { changes: [{ noteIndex: 5, change: 0.5 }] }
 
 export const sus2: AChord = {
 	cut: 7,
@@ -43,6 +44,17 @@ export const sus4: AChord = {
 	add: [{ noteIndex: 11 }]
 }
 
+export const halfDiminished: AChord = {
+	changes: [
+		{ noteIndex: 3, change: -0.5 },
+		{ noteIndex: 5, change: -0.5 },
+	],
+	cut: 7,
+	minValuableChord: 4
+}
+
+export const jazzSixthChord: AChord = { add: [{ noteIndex: 13 }], cut: 5 }
+
 export const allChords: {[key: string]: AChord} = {
 	'': {},
 	maj: major,
@@ -51,6 +63,10 @@ export const allChords: {[key: string]: AChord} = {
 	aug: augmented,
 	sus2,
 	sus4,
+	'ø': halfDiminished,
+	mMaj: combineAChords(minor, major),
+	augMaj: combineAChords(augmented, major),
+	6: jazzSixthChord,
 }
 
 export const mapLengthToName = {

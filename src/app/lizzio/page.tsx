@@ -39,7 +39,7 @@ const Lizzio = () => {
 					<div key={note} className={'flex flex-col items-center card p-6'}>
 						<div className={'flex gap-6 text-center'}>
 							{Object.keys(possibles).map((name) =>
-								<div key={note + name} className={`flex flex-col`}>
+								<div key={note + name} className={`flex flex-col items-center`}>
 									<div onClick={() => setSelected(possibles[name]?.notes)}>{note}{possibles[name].symbol}</div>
 
 									{possibles[name]?.notes.map((pitch, index) =>
@@ -47,7 +47,7 @@ const Lizzio = () => {
 											index >= 2 && setSelected(possibles[name]?.notes.slice(0, index + 1))
 										} key={pitch}
 												 className={`${selected.includes(pitch) ? 'bg-blue-200' : ''}
-														rounded-md px-2 py-1 m-2 flex justify-center items-center`}>{pitch}</div>
+														rounded-md px-2 py-1 m-2 w-[37px] flex justify-center items-center`}>{pitch}</div>
 									)}
 								</div>
 							)}
