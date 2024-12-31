@@ -1,27 +1,34 @@
 'use client'
 
 import { algorithm } from "@/Concepts/lizzio/concept";
-import { useMemo, useState } from "react";
-import {
-	createScale,
-	createScaleFromMajor,
-	MajorScale,
-	note,
-	PhrygianDominantAccidental
-} from "@/Concepts/ScaleConstruction";
+import { useCallback, useMemo, useState } from "react";
+import { MajorScale, note } from "@/Concepts/ScaleConstruction";
 import { mapChangeToSymbol } from "@/Concepts/lizzio/chords";
 import Notes from "@/Components/Neck/Notes";
+import { modeScale } from "@/Concepts/lizzio/modes";
+import { clone } from "@/Components/utils";
+
+const stackNotes = (theNote: note, set) => set(pre => {
+	const prev: note[] = clone(pre);
+	const index = prev.indexOf(theNote);
+	if (index > -1) {
+		prev.splice(index, 1);
+		return prev;
+	} else return [...prev, theNote];
+})
 
 const Lizzio = () => {
-	const [root, setRoot] = useState("G");
-	// const scale = useMemo(() => createScale(MajorScale, root), [root]);
+	const [root, setRoot] = useState("B");
+	const scale = useMemo(() => modeScale(MajorScale, root, 3), [root]);
 	const [selected, setSelected] = useState<note[]>([]);
-	const scale = useMemo(() => createScaleFromMajor(PhrygianDominantAccidental, root), [root]);
+	// const scale = useMemo(() => createScaleFromMajor(PhrygianDominantAccidental, root), [root]);
 	const alg = useMemo(() =>
 			scale.map((pitch) => ({
 				...algorithm(scale, pitch), note: pitch
 			}))
 		, [scale])
+
+	const selectNote = useCallback((pitch) => stackNotes(pitch, setSelected), []);
 
 	return (<div className='resume-bg max-w-[1300px] m-auto'>
 		<div className='relative font-lato-meduim h-[1650px] pt-16 max-w-[1300px]'>
@@ -31,10 +38,10 @@ const Lizzio = () => {
 				</div>)}
 			</div>
 			<div className={"mt-4"}>
-				<Notes selected={selected} setSelected={setSelected} scale={scale}
+				<Notes selected={selected} selectNote={selectNote} scale={scale}
 							 strings={["E", "A", "D", "G", "B", "E"].reverse() as note[]}/>
 			</div>
-			<div className={'flex flex-wrap px-10 gap-6 mt-8 justify-center'}>
+			<div className={'flex overflow-x-auto px-10 gap-6 mt-8'}>
 				{alg.map(({ note, possibles, alterations }) =>
 					<div key={note} className={'flex flex-col items-center card p-6'}>
 						<div className={'flex gap-6 text-center'}>

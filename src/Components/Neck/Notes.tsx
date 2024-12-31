@@ -4,7 +4,7 @@ import { clone } from "@/Components/utils";
 import { findChord, humanReadableChord } from "@/Concepts/ChordConstruction";
 import DisplayScale from "@/Components/Scales/DisplayScale";
 
-const Notes = ({ scale, strings, selected, setSelected }: {scale: note[], strings: note[]}) => {
+const Notes = ({ scale, strings, selected, selectNote }: {scale: note[], strings: note[]}) => {
 
 	const [possibleChords, setPossibleChords] = useState<humanReadableChord[]>([]);
 
@@ -13,15 +13,6 @@ const Notes = ({ scale, strings, selected, setSelected }: {scale: note[], string
 
 		return [...notes.slice(stringIndex), ...notes.slice(0, stringIndex), string]
 	}, []);
-
-	const selectNote = useCallback((theNote: note) => setSelected(pre => {
-		const prev: note[] = clone(pre);
-		const index = prev.indexOf(theNote);
-		if (index > -1) {
-			prev.splice(index, 1);
-			return prev;
-		} else return [...prev, theNote];
-	}), []);
 
 	useEffect(() => {
 		setPossibleChords(selected.length ? findChord(selected, scale) : []);
