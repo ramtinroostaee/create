@@ -56,7 +56,7 @@ export const halfDiminished: AChord = {
 export const jazzSixthChord: AChord = { add: [{ noteIndex: 13 }], cut: 5 }
 
 export const allChords: {[key: string]: AChord} = {
-	'': {},
+	'': { minValuableChord: 4, changes: [{ noteIndex: 7, change: 0 }] } as AChord,
 	maj: major,
 	m: minor,
 	dim: diminished,
@@ -67,14 +67,6 @@ export const allChords: {[key: string]: AChord} = {
 	mMaj: combineAChords(minor, major),
 	augMaj: combineAChords(augmented, major),
 	6: jazzSixthChord,
-}
-
-export const mapLengthToName = {
-	3: '',
-	4: '7',
-	5: '9',
-	6: '11',
-	7: '13'
 }
 
 export const mapChangeToSymbol = {

@@ -7,6 +7,7 @@ export type note = "A" | "A#" | "B" | "C" | "C#" | "D" | "D#" | "E" | "F" | "F#"
 
 export const notes: note[] = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 export const MajorScale: number[] = [1, 1, 0.5, 1, 1, 1, 0.5];
+export const HarmonicMinorScale: number[] = [1, 0.5, 1, 1, 0.5, 1.5, 0.5];
 
 export const MinorAccidental: intervalNote[] = [
     {noteIndex: 1},
@@ -38,6 +39,16 @@ export const HarmonicMinorAccidental: intervalNote[] = [
     {noteIndex: 7 },
 ];
 
+export const MelodicMinorAccidental: intervalNote[] = [
+    {noteIndex: 1},
+    {noteIndex: 2},
+    {noteIndex: 3, change: -0.5},
+    {noteIndex: 4},
+    {noteIndex: 5},
+    {noteIndex: 6},
+    {noteIndex: 7 },
+];
+
 export const Liaghat: intervalNote[] = [
     {noteIndex: 1},
     {noteIndex: 2, change: -0.5},
@@ -49,7 +60,7 @@ export const Liaghat: intervalNote[] = [
 ]
 
 export const createScale = (scale, root) => {
-    const scaleNotes = [root];
+    const scaleNotes: note[] = [root];
     let currentNoteIndex = notes.findIndex((note) => note === root);
 
     scale.forEach((step) => {

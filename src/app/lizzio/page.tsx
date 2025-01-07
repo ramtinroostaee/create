@@ -2,11 +2,12 @@
 
 import { algorithm } from "@/Concepts/lizzio/concept";
 import { useCallback, useMemo, useState } from "react";
-import { MajorScale, note } from "@/Concepts/ScaleConstruction";
+import { HarmonicMinorScale, note } from "@/Concepts/ScaleConstruction";
 import { mapChangeToSymbol } from "@/Concepts/lizzio/chords";
 import Notes from "@/Components/Neck/Notes";
 import { modeScale } from "@/Concepts/lizzio/modes";
 import { clone } from "@/Components/utils";
+import { secondaryDominant } from "@/Concepts/lizzio/chords/utils";
 
 const stackNotes = (theNote: note, set) => set(pre => {
 	const prev: note[] = clone(pre);
@@ -19,9 +20,10 @@ const stackNotes = (theNote: note, set) => set(pre => {
 
 const Lizzio = () => {
 	const [root, setRoot] = useState("B");
-	const scale = useMemo(() => modeScale(MajorScale, root, 3), [root]);
+	const scale = useMemo(() => modeScale(HarmonicMinorScale, root, 1), [root]);
+	// const scale = useMemo(() => modeScale(MajorScale, root, 3), [root]);
 	const [selected, setSelected] = useState<note[]>([]);
-	// const scale = useMemo(() => createScaleFromMajor(PhrygianDominantAccidental, root), [root]);
+	// const scale = useMemo(() => createScaleFromMajor(MelodicMinorAccidental, root), [root]);
 	const alg = useMemo(() =>
 			scale.map((pitch) => ({
 				...algorithm(scale, pitch), note: pitch
@@ -58,6 +60,14 @@ const Lizzio = () => {
 									)}
 								</div>
 							)}
+						</div>
+
+						<div className={'flex gap-2 items-center mt-2 mb-6'}>
+							{/*secondary dominant:*/}
+							V7:
+							{secondaryDominant(note).map((pitch) => (
+								<div key={pitch} className={'px-2 py-2 mx-0 w-[37px] bg-gray-200 rounded-md text-center'}>{pitch}</div>
+							))}
 						</div>
 
 						<div>Alterations</div>

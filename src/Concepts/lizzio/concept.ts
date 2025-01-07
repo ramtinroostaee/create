@@ -2,6 +2,7 @@ import { createScale, intervalNote, MajorScale, note, notes } from "@/Concepts/S
 import { allChords, } from "@/Concepts/lizzio/chords";
 import {
 	add,
+	alterChanges,
 	createChord,
 	cutChangeNo,
 	findNote,
@@ -18,7 +19,17 @@ export const algorithm = (scale: note[], root: note) => {
 
 	Object.keys(allChords).forEach((name) => {
 		const addsInclude = intervalIncludes(allIntervals, allChords[name]?.add ?? [])
+
 		let ok = true
+		const changes = allChords[name]?.changes ?? []
+
+		if (changes?.length <= 2) {
+			intervalIncludes(allIntervals, alterChanges(changes))
+				.forEach((includes) => {
+					ok = ok && includes
+				})
+		}
+
 		addsInclude.forEach((includes) => {
 			ok = ok && includes
 		})

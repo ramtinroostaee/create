@@ -103,3 +103,15 @@ export const createChord = (root: note, intervals: intervalNote[]) => {
 
 	return intervals.map((interval) => findNote(rootMajor, interval))
 }
+
+export const secondaryDominant = (root: note) => {
+	const rootMajor = createScale(MajorScale, root)
+
+	return createChord(rootMajor[4], cut(dominant, 7))
+}
+
+export const alterChanges = (changes: intervalNote[]) =>
+	alteration(dominant.filter(({ noteIndex }) =>
+		changes?.findIndex((change) =>
+			change.noteIndex === noteIndex
+		) > -1), changes ?? [])
