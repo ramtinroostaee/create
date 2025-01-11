@@ -1,7 +1,7 @@
 'use client'
 
 import { algorithm } from "@/Concepts/lizzio/concept";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { note } from "@/Concepts/ScaleConstruction";
 import Notes from "@/Components/Neck/Notes";
 import { Modes, modeScale, scales } from "@/Concepts/lizzio/modes";
@@ -29,6 +29,22 @@ const Lizzio = ({ params }: Params) => {
 				...algorithm(scale, pitch), note: pitch
 			}))
 		, [scale])
+
+	useEffect(() => {
+		const the = {}
+
+		scale.forEach((pitch) => {
+			the[pitch] = 0
+		})
+
+		console.log(AChords)
+		AChords.map(({possibles}) => Object.keys(possibles).forEach((name) => {
+			possibles[name].notes.forEach((pitch) => {
+				the[pitch]++
+			})
+		}))
+		console.log(the)
+	}, [scale, AChords]);
 
 	const selectNote = useCallback((pitch) => stackNotes(pitch, setSelected), []);
 
