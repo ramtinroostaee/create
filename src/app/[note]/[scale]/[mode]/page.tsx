@@ -1,11 +1,11 @@
 'use client'
 
-import { algorithm } from "@/Concepts/lizzio/concept";
 import { useCallback, useMemo, useState } from "react";
 import { note } from "@/Concepts/ScaleConstruction";
 import Notes from "@/Components/Neck/Notes";
 import { Modes, modeScale, scales } from "@/Concepts/lizzio/modes";
 import { clone } from "@/Components/utils";
+import { algorithm } from "@/Concepts/lizzio/concept";
 import AChordCard from "@/Components/AChordCard";
 
 const stackNotes = (theNote: note, set) => set(pre => {
@@ -18,14 +18,30 @@ const stackNotes = (theNote: note, set) => set(pre => {
 })
 
 const ChordProgression: (1 | 2 | 3 | 4 | 5 | 6 | 7)[] = [1, 2, 6, 5]
+type Params = {note: note; scale: 'Major' | 'HarmonicMinor'; mode: number}
 
-const Lizzio = () => {
-	const [root, setRoot] = useState({ note: 'G', scale: 'HarmonicMinor', mode: 1 });
-	const scale = useMemo(() => modeScale(scales[root.scale], root.note, 1), [root]);
-
-	const cushScale = useMemo(() => modeScale(scales[root.scale], 'G#', 1), [root]);
-
+const Lizzio = ({ params }: Params) => {
+	const [type, setType] = useState('cush')
+	const [cushMode, setCushMode] = useState(0)
 	const [selected, setSelected] = useState<note[]>([]);
+	const scale = useMemo(() => modeScale(scales[params.scale], params.note, params.mode), [params]);
+
+	const cushScale = useMemo<note[]>(() => {
+		if (cushMode) {
+			if (type === 'parallel') {
+				return modeScale(scales[params.scale], params.note, cushMode)
+			} else if (type === 'cush') {
+				const the = modeScale(scales[params.scale], params.note, cushMode)
+
+				for (let index = (params.mode - cushMode + 7) % 7; index; --index) {
+					the.push(the[0])
+					the.shift()
+				}
+
+				return the
+			} else return modeScale(scales[params.scale], 'G#', 1)
+		}
+	}, [params, type, cushMode, scale]);
 
 	const AChords = useMemo(() =>
 			ChordProgression.map((CNum) => scale[CNum - 1]).map((pitch) => ({
@@ -34,25 +50,39 @@ const Lizzio = () => {
 		, [scale])
 
 	const cushAChords = useMemo(() =>
-			ChordProgression.map((CNum) => cushScale[CNum - 1]).map((pitch) => ({
+			cushScale ? ChordProgression.map((CNum) => cushScale[CNum - 1]).map((pitch) => ({
 				...algorithm(cushScale, pitch), note: pitch
-			}))
-		, [scale])
+			})) : []
+		, [cushScale])
 
 	const selectNote = useCallback((pitch) => stackNotes(pitch, setSelected), []);
 
 	return (<div className='resume-bg max-w-[1300px] m-auto'>
 		<div className='relative font-lato-meduim h-[1650px] {/*pt-16*/} pt-0 max-w-[1300px]'>
-			{/*<div className={"flex justify-center"}>{scale.map((note) =>*/}
-			{/*	<div key={note} className={"bg-gray-400 rounded-md w-[37px] text-center px-2 py-1 mx-2"}>*/}
-			{/*		{note}*/}
-			{/*	</div>)}*/}
-			{/*</div>*/}
-			<div className={'flex justify-between w-[400px] mx-auto'}>
-				<div>root: {root.note}</div>
-				<div>scale: {root.scale}</div>
-				<div>mode: {Modes[root.scale][root.mode]}</div>
+			<div className={'flex justify-center w-[400px] mx-auto pt-4'}>
+				<div className={'card p-2'}>{params.note} {Modes[params.scale][params.mode - 1]}</div>
 			</div>
+
+			<div className={'flex justify-between w-[400px] mx-auto'}>
+				<div onClick={() => setType('parallel')}
+						 className={`${type === 'parallel' ? 'card' : ''} p-2 cursor-pointer`}
+				>parallel
+				</div>
+				<div onClick={() => setType('cush')}
+						 className={`${type === 'cush' ? 'card' : ''} p-2 cursor-pointer`}
+				>cush
+				</div>
+			</div>
+
+			<div className={'flex justify-between mt-4 w-[800px] mx-auto text-center'}>
+				{Modes[params.scale].map((name, index) =>
+					<div className={`p-2 cursor-pointer ${cushMode === index + 1 ? 'card' : ''}`} key={name}
+							 onClick={() => setCushMode(index + 1)}>
+						{name}
+					</div>
+				)}
+			</div>
+
 			<div className={"mt-4"}>
 				<Notes selected={selected} selectNote={selectNote} scale={scale}
 							 strings={["E", "A", "D", "G", "B", "E"].reverse() as note[]}/>
