@@ -2,7 +2,8 @@ import { notes } from "@/Concepts/ScaleConstruction";
 
 export const scales: {} = {
 	Major: [1, 1, 0.5, 1, 1, 1, 0.5],
-	HarmonicMinor: [1, 0.5, 1, 1, 0.5, 1.5, 0.5]
+	HarmonicMinor: [1, 0.5, 1, 1, 0.5, 1.5, 0.5],
+	my: [0.5, 1, 0.5, 1.5, 0.5, 1, 1]
 }
 
 export const Modes = {

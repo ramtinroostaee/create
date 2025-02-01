@@ -1,8 +1,9 @@
 'use client'
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { note, notes } from "@/Concepts/ScaleConstruction";
 import { clone } from "@/Components/utils";
 import { algorithm } from "@/Concepts/lizzio/concept";
+import What from "@/Components/AChordCard/what";
 
 const strings: note[] = ["E", "B", "G", "D", "A", "E"]
 
@@ -24,14 +25,12 @@ const FretBoard = () => {
 		} else return [...prev, theNote];
 	}), []);
 
-	useEffect(() => {
-		if (selected.length >= 3) {
-			selected.forEach((pitch) => {
-				const alg = algorithm(selected, pitch)
-				Object.keys(alg.possibles).length && console.log(pitch, alg.possibles)
-			})
-		}
-	}, [selected]);
+	const AChords = useMemo(() =>
+			selected.map((pitch) => ({
+				...algorithm(selected, pitch), note: pitch
+			}))
+		, [selected])
+	console.log(AChords, selected)
 
 	return (
 		<div className={'mt-4'}>
@@ -78,6 +77,24 @@ const FretBoard = () => {
 					- - - - - - - - - - - - -
 				</div>
 			</div>
+
+			<div className={'flex overflow-x-auto px-10 gap-6 mt-8'}>
+				{AChords.map((stuff) =>
+					<What key={stuff.note} {...stuff} setSelected={setSelected} selected={selected}/>)}
+			</div>
+			{/*{alg.map(({ possibles }) => {*/}
+			{/*	const chords = Object.keys(possibles)*/}
+			{/*	if (chords.length) {*/}
+			{/*		return chords.map((name) => {*/}
+			{/*			return (*/}
+			{/*				<div>*/}
+
+			{/*				</div>*/}
+			{/*			)*/}
+			{/*		})*/}
+			{/*	}*/}
+
+			{/*})}*/}
 
 		</div>
 	);
