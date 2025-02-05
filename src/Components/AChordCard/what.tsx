@@ -34,9 +34,7 @@ const What = ({ note, possibles, alterations, selected, setSelected }) => {
 
 			<div className={'w-full h-1 border-dotted border-b-1'}></div>
 
-			<div className={'mt-4'}> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				- - - - - - - - - - - - -
-			</div>
+			<div className={'mt-4'}> - - - - - - -</div>
 
 			<div className={'flex gap-2 items-center mt-2 mb-6'}>
 				{/*secondary dominant:*/}

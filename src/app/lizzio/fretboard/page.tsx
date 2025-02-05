@@ -8,7 +8,8 @@ import What from "@/Components/AChordCard/what";
 const strings: note[] = ["E", "B", "G", "D", "A", "E"]
 
 const FretBoard = () => {
-	const [selected, setSelected] = useState<note[]>(['C', 'D#', 'G']);
+	// ['F#', 'A#', 'C#']
+	const [selected, setSelected] = useState<note[]>(['F#', 'A#', 'C#']);
 
 	const stringRow = useCallback((string: note) => {
 		const stringIndex = notes.findIndex((note) => note === string);
@@ -30,10 +31,9 @@ const FretBoard = () => {
 				...algorithm(selected, pitch), note: pitch
 			}))
 		, [selected])
-	console.log(AChords, selected)
 
 	return (
-		<div className={'mt-4'}>
+		<div className={'mt-4 max-w-[1600px] mx-auto'}>
 			<div className={"flex items-start flex-col mx-auto w-[481px]"}>
 				<div className={"flex text-center"}>{stringRow('E').map((note, i) => <div
 					key={`${note}${i}`}
@@ -58,7 +58,7 @@ const FretBoard = () => {
 						)}
 					</div>)}
 				<div className={'mt-4'}> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					- - - - - - - - - - - - -
+					- - - - - - -
 				</div>
 				<div className={'flex justify-between w-full'}>{notes.map((pitch) =>
 					<div
@@ -74,28 +74,14 @@ const FretBoard = () => {
 					</div>)}
 				</div>
 				<div className={'mb-4'}> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					- - - - - - - - - - - - -
+					- - - - - - -
 				</div>
 			</div>
 
-			<div className={'flex overflow-x-auto px-10 gap-6 mt-8'}>
+			<div className={'flex overflow-x-auto mx-auto w-full px-10 gap-6 mt-8'}>
 				{AChords.map((stuff) =>
 					<What key={stuff.note} {...stuff} setSelected={setSelected} selected={selected}/>)}
 			</div>
-			{/*{alg.map(({ possibles }) => {*/}
-			{/*	const chords = Object.keys(possibles)*/}
-			{/*	if (chords.length) {*/}
-			{/*		return chords.map((name) => {*/}
-			{/*			return (*/}
-			{/*				<div>*/}
-
-			{/*				</div>*/}
-			{/*			)*/}
-			{/*		})*/}
-			{/*	}*/}
-
-			{/*})}*/}
-
 		</div>
 	);
 };

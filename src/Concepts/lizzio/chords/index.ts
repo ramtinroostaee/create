@@ -55,8 +55,9 @@ export const halfDiminished: AChord = {
 
 export const jazzSixthChord: AChord = { add: [{ noteIndex: 13 }], cut: 5 }
 
+// 	'': { minValuableChord: 4, changes: [{ noteIndex: 7, change: 0 }] } as AChord,
 export const allChords: {[key: string]: AChord} = {
-	'': { minValuableChord: 4, changes: [{ noteIndex: 7, change: 0 }] } as AChord,
+	'': { minValuableChord: 3 } as AChord,
 	maj: major,
 	m: minor,
 	dim: diminished,
